@@ -20,7 +20,11 @@ git:
   depth: false  
 
 script:
-  - ./gradlew --stacktrace build
+  - ./gradlew --stacktrace build sonarqube
+
+deploy:
+  provider: script
+  script: if [[ "$TRAVIS_OS_NAME" == "linux" ]]; ./gradlew --stacktrace artifactoryPublish; fi
 
 notifications:
   email:
