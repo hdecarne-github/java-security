@@ -12,12 +12,14 @@ jdk:
 
 os:
   - linux
+  - osx
+  - windows
 
 git:
   depth: false  
 
 script:
-  - ./gradlew --stacktrace build artifactoryPublish sonarqube
+  - ./gradlew --stacktrace build
 
 notifications:
   email:
