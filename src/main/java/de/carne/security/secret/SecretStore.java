@@ -58,7 +58,8 @@ abstract class SecretStore {
 	}
 
 	private byte[] generateSecret() throws GeneralSecurityException {
-		return AES256Cipher.generateSecret();
+		return AESCipher
+				.generateSecret(javax.crypto.Cipher.getMaxAllowedKeyLength(AESCipher.KEY_ALG) >= 256 ? 256 : 128);
 	}
 
 	@SuppressWarnings("squid:S1301")
@@ -70,8 +71,8 @@ abstract class SecretStore {
 		Cipher cipher;
 
 		switch (secret[0]) {
-		case AES256Cipher.ID:
-			cipher = AES256Cipher.getInstance(secret);
+		case AESCipher.ID:
+			cipher = AESCipher.getInstance(secret);
 			break;
 		default:
 			throw new IllegalArgumentException("Unrecognized cipher secret: " + secret[0]);
