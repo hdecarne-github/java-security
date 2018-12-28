@@ -17,7 +17,7 @@
 package de.carne.security.jna.macos;
 
 /**
- * The collection of required framework & library functions.
+ * The collection of required framework &amp; library functions.
  */
 public final class Native {
 
