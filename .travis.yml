@@ -21,10 +21,8 @@ git:
 
 script:
   - ./gradlew --stacktrace build sonarqube
-
-deploy:
-  provider: script
-  script: if [[ "$TRAVIS_OS_NAME" == "linux" ]]; ./gradlew --stacktrace artifactoryPublish; fi
+after_success:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; ./gradlew --stacktrace artifactoryPublish; fi
 
 notifications:
   email:
