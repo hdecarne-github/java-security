@@ -13,7 +13,8 @@ jdk:
 os:
   - linux
   - osx
-  - windows
+
+osx_image: xcode9.3
 
 git:
   depth: false  
