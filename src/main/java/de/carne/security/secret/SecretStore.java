@@ -61,6 +61,7 @@ abstract class SecretStore {
 		return AES256Cipher.generateSecret();
 	}
 
+	@SuppressWarnings("squid:S1301")
 	private Cipher getCipherInstance(byte[] secret) {
 		if (secret.length == 0) {
 			throw new IllegalArgumentException("Invalid cipher secret");

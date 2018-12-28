@@ -34,7 +34,7 @@ public final class SecureStorage {
 
 	private static final Log LOG = new Log();
 
-	private static final SecretStore[] SECRET_STORES = { new GenericSecretStore() };
+	private static final SecretStore[] SECRET_STORES = { new GenericSecretStore(), new MacOSSecretStore() };
 
 	private final SecretStore secretStore;
 	private final String id;
