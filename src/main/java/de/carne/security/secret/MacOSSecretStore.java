@@ -24,13 +24,16 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import com.sun.jna.Pointer;
 
+import de.carne.boot.logging.Log;
 import de.carne.boot.platform.Platform;
 import de.carne.security.jna.macos.Native;
 
 /**
- *
+ * {@linkplain SecretStore} implementation using the macOS Keychain.
  */
 final class MacOSSecretStore extends SecretStore {
+
+	private static final Log LOG = new Log();
 
 	private static final boolean ENABLED = Boolean
 			.parseBoolean(System.getProperty(MacOSSecretStore.class.getName(), Boolean.TRUE.toString()));
@@ -61,6 +64,8 @@ final class MacOSSecretStore extends SecretStore {
 
 	@Override
 	public void deleteSecret(String id) throws IOException {
+		LOG.info("Deleting secret ''{0}''...", id);
+
 		byte[] serviceNameBytes = id.getBytes(StandardCharsets.UTF_8);
 		byte[] accountNameBytes = ACCOUNT_NAME.getBytes(StandardCharsets.UTF_8);
 		@Nullable Pointer[] itemRef = new @Nullable Pointer[1];
@@ -81,6 +86,8 @@ final class MacOSSecretStore extends SecretStore {
 
 	@Override
 	public byte @Nullable [] getSecret(String id) throws IOException {
+		LOG.debug("Reading secret ''{0}''...", id);
+
 		byte[] serviceNameBytes = id.getBytes(StandardCharsets.UTF_8);
 		byte[] accountNameBytes = ACCOUNT_NAME.getBytes(StandardCharsets.UTF_8);
 		int[] passwordLength = new int[1];
@@ -105,6 +112,8 @@ final class MacOSSecretStore extends SecretStore {
 
 	@Override
 	public void setSecret(String id, byte[] secret) throws IOException {
+		LOG.info("Setting secret ''{0}''...", id);
+
 		byte[] serviceNameBytes = id.getBytes(StandardCharsets.UTF_8);
 		byte[] accountNameBytes = ACCOUNT_NAME.getBytes(StandardCharsets.UTF_8);
 		@Nullable Pointer[] itemRef = new @Nullable Pointer[1];

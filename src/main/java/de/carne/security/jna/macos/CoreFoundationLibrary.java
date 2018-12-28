@@ -26,21 +26,30 @@ public interface CoreFoundationLibrary extends Library {
 
 	/**
 	 * See <a href= "https://developer.apple.com/search/?q=CFStringGetLength">Apple Developer Documentation</a>
+	 *
+	 * @param theString see Apple Developer Documentation.
+	 * @return see Apple Developer Documentation.
 	 */
-	@SuppressWarnings({ "javadoc", "squid:S00100", "squid:S00107" })
+	@SuppressWarnings({ "squid:S00100", "squid:S00107" })
 	long/* CFIndex */ CFStringGetLength(Pointer/* CFStringRef */ theString);
 
 	/**
 	 * See <a href= "https://developer.apple.com/search/?q=CFStringGetCharacterAtIndex">Apple Developer
 	 * Documentation</a>
+	 * 
+	 * @param theString see Apple Developer Documentation.
+	 * @param idx see Apple Developer Documentation.
+	 * @return see Apple Developer Documentation.
 	 */
-	@SuppressWarnings({ "javadoc", "squid:S00100", "squid:S00107" })
+	@SuppressWarnings({ "squid:S00100", "squid:S00107" })
 	char/* UniChar */ CFStringGetCharacterAtIndex(Pointer/* CFStringRef */ theString, long/* CFIndex */ idx);
 
 	/**
 	 * See <a href= "https://developer.apple.com/search/?q=CFRelease">Apple Developer Documentation</a>
+	 * 
+	 * @param cf see Apple Developer Documentation.
 	 */
-	@SuppressWarnings({ "javadoc", "squid:S00100", "squid:S00107" })
+	@SuppressWarnings({ "squid:S00100", "squid:S00107" })
 	void CFRelease(Pointer/* CFTypeRef */ cf);
 
 }
