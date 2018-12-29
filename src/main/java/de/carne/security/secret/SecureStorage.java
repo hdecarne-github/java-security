@@ -18,6 +18,7 @@ package de.carne.security.secret;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Base64;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -97,6 +98,18 @@ public final class SecureStorage {
 	}
 
 	/**
+	 * Encrypt a given byte secret and base64 encode the encrypted bytes.
+	 *
+	 * @param secret the byte secret to encrypt.
+	 * @return the base64 encoded encrypted byte secret.
+	 * @throws IOException if an I/O error occurs during encryption.
+	 * @see #decryptBytesBase64(String, Consumer)
+	 */
+	public String encryptBytesBase64(ByteSecret secret) throws IOException {
+		return Base64.getEncoder().encodeToString(encryptBytes(secret));
+	}
+
+	/**
 	 * Decrypt a previously encrypted byte secret.
 	 *
 	 * @param encrypted the encrypted byte secret.
@@ -111,6 +124,18 @@ public final class SecureStorage {
 		} catch (GeneralSecurityException e) {
 			throw new IOException(e.getLocalizedMessage(), e);
 		}
+	}
+
+	/**
+	 * Decrypt a previously encrypted and base64 encoded byte secret.
+	 *
+	 * @param encrypted the encrypted and base64 encoded byte secret.
+	 * @param consumer the {@linkplain Consumer} to invoke with the decrypted byte secret.
+	 * @throws IOException if an I/O error occurs during decryption.
+	 * @see #encryptBytesBase64(ByteSecret)
+	 */
+	public void decryptBytesBase64(String encrypted, Consumer<byte[]> consumer) throws IOException {
+		decryptBytes(Base64.getDecoder().decode(encrypted), consumer);
 	}
 
 	/**
@@ -143,6 +168,18 @@ public final class SecureStorage {
 	}
 
 	/**
+	 * Encrypt a given char secret and base64 encode the encrypted bytes.
+	 *
+	 * @param secret the char secret to encrypt.
+	 * @return the encrypted and base64 encoded char secret.
+	 * @throws IOException if an I/O error occurs during encryption.
+	 * @see #decryptCharsBase64(String, Consumer)
+	 */
+	public String encryptCharsBase64(CharSecret secret) throws IOException {
+		return Base64.getEncoder().encodeToString(encryptChars(secret));
+	}
+
+	/**
 	 * Decrypt a previously encrypted char secret.
 	 *
 	 * @param encrypted the encrypted char secret.
@@ -166,6 +203,18 @@ public final class SecureStorage {
 					| ((plainBytes[2 * plainCharIndex + 1] & 0xff) << 8));
 		}
 		return CharSecret.wrap(plainChars);
+	}
+
+	/**
+	 * Decrypt a previously encrypted and base64 encoded char secret.
+	 *
+	 * @param encrypted the encrypted and base64 encoded char secret.
+	 * @param consumer the {@linkplain Consumer} to invoke with the decrypted char secret.
+	 * @throws IOException if an I/O error occurs during decryption.
+	 * @see #encryptCharsBase64(CharSecret)
+	 */
+	public void decryptCharsBase64(String encrypted, Consumer<char[]> consumer) throws IOException {
+		decryptChars(Base64.getDecoder().decode(encrypted), consumer);
 	}
 
 	/**

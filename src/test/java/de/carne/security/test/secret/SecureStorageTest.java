@@ -105,4 +105,29 @@ class SecureStorageTest {
 		newStorage.delete();
 	}
 
+	@Test
+	void testBase64SecureStorage() throws IOException {
+		SecureStorage storage = SecureStorage.create(SecureStorageTest.class.getName());
+		final byte[] token = TEST_PASSWORD.getBytes();
+
+		try (ByteSecret tokenSecret = ByteSecret.wrap(token)) {
+			// Test encryption and decryption of bytes
+			String encryptedToken = storage.encryptBytesBase64(tokenSecret);
+
+			storage.decryptBytesBase64(encryptedToken,
+					decryptedToken -> Assertions.assertArrayEquals(token, decryptedToken));
+		}
+
+		final char[] password = TEST_PASSWORD.toCharArray();
+
+		try (CharSecret passwordSecret = CharSecret.wrap(password)) {
+			// Test encryption and decryption of chars
+			String encryptedPassword = storage.encryptCharsBase64(passwordSecret);
+
+			storage.decryptCharsBase64(encryptedPassword,
+					decryptedPassword -> Assertions.assertArrayEquals(password, decryptedPassword));
+		}
+		storage.delete();
+	}
+
 }
