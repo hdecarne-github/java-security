@@ -49,7 +49,7 @@ public final class SecureStorage {
 	}
 
 	/**
-	 * Create a new {@linkplain SecureStorage} instance for a given id.
+	 * Creates a new {@linkplain SecureStorage} instance for a given id.
 	 * <p>
 	 * The submitted id is used to uniquely identify the encryption secret to use. Unless {@linkplain #delete()} is
 	 * called for the created instance a subsequent call with the same id will create an instance with the same

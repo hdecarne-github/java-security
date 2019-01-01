@@ -25,8 +25,8 @@ public class SecurityError extends Error {
 	private static final long serialVersionUID = 3524702606980806066L;
 
 	/**
-	 * Construct a new {@linkplain SecurityError}.
-	 * 
+	 * Constructs a new {@linkplain SecurityError}.
+	 *
 	 * @param cause the causing exception.
 	 */
 	public SecurityError(Throwable cause) {
