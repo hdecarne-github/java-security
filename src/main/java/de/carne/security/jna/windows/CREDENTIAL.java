@@ -27,7 +27,7 @@ import com.sun.jna.WString;
  * See <a href="https://docs.microsoft.com/en-us/windows/desktop/api/wincred/ns-wincred-_credentialw">Microsoft
  * Developer Documentation</a>.
  */
-@SuppressWarnings({ "javadoc", "squid:S2160" })
+@SuppressWarnings({ "javadoc", "squid:S2160", "squid:S00116", "squid:ClassVariableVisibilityCheck" })
 @FieldOrder({ "Flags", "Type", "TargetName", "Comment", "LastWritten", "CredentialBlobSize", "CredentialBlob",
 		"Persist", "AttributeCount", "Attributes", "TargetAlias", "UserName" })
 public class CREDENTIAL extends Structure {

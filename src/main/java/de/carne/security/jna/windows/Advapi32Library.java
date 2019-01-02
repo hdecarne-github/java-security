@@ -23,71 +23,72 @@ import com.sun.jna.win32.StdCallLibrary;
 /**
  * JNA interface to the required functions of the Win32' Advapi32 library.
  */
+@SuppressWarnings("squid:S1214")
 public interface Advapi32Library extends StdCallLibrary {
 
 	/**
 	 * See <a href="https://docs.microsoft.com/en-us/windows/desktop/api/wincred/ns-wincred-_credentialw">Microsoft
 	 * Developer Documentation</a>
 	 */
-	public static int CRED_TYPE_GENERIC = 1;
+	int CRED_TYPE_GENERIC = 1;
 	/**
 	 * See <a href="https://docs.microsoft.com/en-us/windows/desktop/api/wincred/ns-wincred-_credentialw">Microsoft
 	 * Developer Documentation</a>
 	 */
-	public static int CRED_TYPE_DOMAIN_PASSWORD = 2;
+	int CRED_TYPE_DOMAIN_PASSWORD = 2;
 	/**
 	 * See <a href="https://docs.microsoft.com/en-us/windows/desktop/api/wincred/ns-wincred-_credentialw">Microsoft
 	 * Developer Documentation</a>
 	 */
-	public static int CRED_TYPE_DOMAIN_CERTIFICATE = 3;
+	int CRED_TYPE_DOMAIN_CERTIFICATE = 3;
 	/**
 	 * See <a href="https://docs.microsoft.com/en-us/windows/desktop/api/wincred/ns-wincred-_credentialw">Microsoft
 	 * Developer Documentation</a>
 	 */
-	public static int CRED_TYPE_DOMAIN_VISIBLE_PASSWORD = 4;
+	int CRED_TYPE_DOMAIN_VISIBLE_PASSWORD = 4;
 	/**
 	 * See <a href="https://docs.microsoft.com/en-us/windows/desktop/api/wincred/ns-wincred-_credentialw">Microsoft
 	 * Developer Documentation</a>
 	 */
-	public static int CRED_TYPE_GENERIC_CERTIFICATE = 5;
+	int CRED_TYPE_GENERIC_CERTIFICATE = 5;
 	/**
 	 * See <a href="https://docs.microsoft.com/en-us/windows/desktop/api/wincred/ns-wincred-_credentialw">Microsoft
 	 * Developer Documentation</a>
 	 */
-	public static int CRED_TYPE_DOMAIN_EXTENDED = 6;
+	int CRED_TYPE_DOMAIN_EXTENDED = 6;
 
 	/**
 	 * See <a href="https://docs.microsoft.com/en-us/windows/desktop/api/wincred/nf-wincred-credwritew">Microsoft
 	 * Developer Documentation</a>
 	 */
-	public static int CRED_PRESERVE_CREDENTIAL_BLOB = 1;
+	int CRED_PRESERVE_CREDENTIAL_BLOB = 1;
 
 	/**
 	 * See <a href="https://docs.microsoft.com/en-us/windows/desktop/api/wincred/ns-wincred-_credentialw">Microsoft
 	 * Developer Documentation</a>
 	 */
-	public static int CRED_FLAGS_PROMPT_NOW = 2;
+	int CRED_FLAGS_PROMPT_NOW = 2;
 	/**
 	 * See <a href="https://docs.microsoft.com/en-us/windows/desktop/api/wincred/ns-wincred-_credentialw">Microsoft
 	 * Developer Documentation</a>
 	 */
-	public static int CRED_FLAGS_USERNAME_TARGET = 4;
+	int CRED_FLAGS_USERNAME_TARGET = 4;
 
 	/**
 	 * See <a href="https://docs.microsoft.com/en-us/windows/desktop/api/wincred/ns-wincred-_credentialw">Microsoft
 	 * Developer Documentation</a>
 	 */
-	public static int CRED_PERSIST_SESSION = 1;
+	int CRED_PERSIST_SESSION = 1;
 	/**
 	 * See <a href="https://docs.microsoft.com/en-us/windows/desktop/api/wincred/ns-wincred-_credentialw">Microsoft
 	 * Developer Documentation</a>
 	 */
-	public static int CRED_PERSIST_LOCAL_MACHINE = 2;
+	int CRED_PERSIST_LOCAL_MACHINE = 2;
 	/**
 	 * See <a href="https://docs.microsoft.com/en-us/windows/desktop/api/wincred/ns-wincred-_credentialw">Microsoft
 	 * Developer Documentation</a>
 	 */
-	public static int CRED_PERSIST_ENTERPRISE = 3;
+	int CRED_PERSIST_ENTERPRISE = 3;
 
 	/**
 	 * See <a href="https://docs.microsoft.com/en-us/windows/desktop/api/wincred/nf-wincred-credreadw">Microsoft
@@ -99,7 +100,7 @@ public interface Advapi32Library extends StdCallLibrary {
 	 * @param Credential see Microsoft Developer Documentation.
 	 * @return see Microsoft Developer Documentation.
 	 */
-	@SuppressWarnings({ "squid:S00100", "squid:S00107" })
+	@SuppressWarnings({ "squid:S00100", "squid:S00107", "squid:S00117" })
 	boolean/* BOOL */ CredRead(String/* LPCSTR */ TargetName, int/* DWORD */ Type, int/* DWORD */ Flags,
 			PointerByReference/* PCREDENTIAL * */ Credential);
 
@@ -111,7 +112,7 @@ public interface Advapi32Library extends StdCallLibrary {
 	 * @param Flags see Microsoft Developer Documentation.
 	 * @return see Microsoft Developer Documentation.
 	 */
-	@SuppressWarnings({ "squid:S00100", "squid:S00107" })
+	@SuppressWarnings({ "squid:S00100", "squid:S00107", "squid:S00117" })
 	boolean/* BOOL */ CredWrite(CREDENTIAL/* PCREDENTIAL */ Credential, int/* DWORD */ Flags);
 
 	/**
@@ -123,7 +124,7 @@ public interface Advapi32Library extends StdCallLibrary {
 	 * @param Flags see Microsoft Developer Documentation.
 	 * @return see Microsoft Developer Documentation.
 	 */
-	@SuppressWarnings({ "squid:S00100", "squid:S00107" })
+	@SuppressWarnings({ "squid:S00100", "squid:S00107", "squid:S00117" })
 	boolean/* BOOL */ CredDelete(String/* LPCSTR */ TargetName, int/* DWORD */ Type, int /* DWORD */ Flags);
 
 	/**
@@ -132,7 +133,7 @@ public interface Advapi32Library extends StdCallLibrary {
 	 *
 	 * @param Buffer see Microsoft Developer Documentation.
 	 */
-	@SuppressWarnings({ "squid:S00100", "squid:S00107" })
+	@SuppressWarnings({ "squid:S00100", "squid:S00107", "squid:S00117" })
 	void CredFree(Pointer /* PVOID */ Buffer);
 
 }
