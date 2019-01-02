@@ -20,6 +20,8 @@ import org.eclipse.jdt.annotation.Nullable;
 
 import com.sun.jna.Library;
 import com.sun.jna.Pointer;
+import com.sun.jna.ptr.IntByReference;
+import com.sun.jna.ptr.PointerByReference;
 
 /**
  * JNA interface to the required functions of the macOS' Security frameworks.
@@ -29,7 +31,7 @@ public interface SecurityLibrary extends Library {
 	/**
 	 * See <a href= "https://developer.apple.com/search/?q=SecKeychainAddGenericPassword">Apple Developer
 	 * Documentation</a>
-	 * 
+	 *
 	 * @param keychain see Apple Developer Documentation.
 	 * @param serviceNameLength see Apple Developer Documentation.
 	 * @param serviceName see Apple Developer Documentation.
@@ -49,7 +51,7 @@ public interface SecurityLibrary extends Library {
 	/**
 	 * See <a href= "https://developer.apple.com/search/?q=SecKeychainItemModifyContent">Apple Developer
 	 * Documentation</a>
-	 * 
+	 *
 	 * @param itemRef see Apple Developer Documentation.
 	 * @param attrList see Apple Developer Documentation.
 	 * @param length see Apple Developer Documentation.
@@ -64,7 +66,7 @@ public interface SecurityLibrary extends Library {
 	/**
 	 * See <a href= "https://developer.apple.com/search/?q=SecKeychainFindGenericPassword">Apple Developer
 	 * Documentation</a>
-	 * 
+	 *
 	 * @param keychainOrArray see Apple Developer Documentation.
 	 * @param serviceNameLength see Apple Developer Documentation.
 	 * @param serviceName see Apple Developer Documentation.
@@ -78,13 +80,13 @@ public interface SecurityLibrary extends Library {
 	@SuppressWarnings({ "squid:S00100", "squid:S00107" })
 	int/* OSStatus */ SecKeychainFindGenericPassword(@Nullable Pointer/* CFTypeRef */ keychainOrArray,
 			int/* UInt32 */ serviceNameLength, byte[]/* const char * */ serviceName, int/* UInt32 */ accountNameLength,
-			byte[]/* const char * */ accountName, int @Nullable []/* UInt32 * */ passwordLength,
-			Pointer @Nullable []/* void * _Nullable * */ passwordData,
-			@Nullable Pointer/* SecKeychainItemRef _Nullable * */ @Nullable [] itemRef);
+			byte[]/* const char * */ accountName, @Nullable IntByReference/* UInt32 * */ passwordLength,
+			@Nullable PointerByReference/* void * _Nullable * */ passwordData,
+			@Nullable PointerByReference/* SecKeychainItemRef _Nullable * */ itemRef);
 
 	/**
 	 * See <a href= "https://developer.apple.com/search/?q=SecKeychainItemDelete">Apple Developer Documentation</a>
-	 * 
+	 *
 	 * @param itemRef see Apple Developer Documentation.
 	 * @return see Apple Developer Documentation.
 	 */
@@ -93,7 +95,7 @@ public interface SecurityLibrary extends Library {
 
 	/**
 	 * See <a href= "https://developer.apple.com/search/?q=SecKeychainItemDelete">Apple Developer Documentation</a>
-	 * 
+	 *
 	 * @param attrList see Apple Developer Documentation.
 	 * @param data see Apple Developer Documentation.
 	 * @return see Apple Developer Documentation.
@@ -104,7 +106,7 @@ public interface SecurityLibrary extends Library {
 
 	/**
 	 * See <a href= "https://developer.apple.com/search/?q=SecCopyErrorMessageString">Apple Developer Documentation</a>
-	 * 
+	 *
 	 * @param status see Apple Developer Documentation.
 	 * @param reserved see Apple Developer Documentation.
 	 * @return see Apple Developer Documentation.

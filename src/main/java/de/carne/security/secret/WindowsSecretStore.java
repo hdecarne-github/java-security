@@ -86,9 +86,10 @@ final class WindowsSecretStore extends SecretStore {
 		if (found) {
 			Pointer pCredential = Objects.requireNonNull(credentialReference.getValue());
 			CREDENTIAL credential = new CREDENTIAL(pCredential);
+			Pointer credentialBlob = Objects.requireNonNull(credential.CredentialBlob);
 
-			secret = credential.CredentialBlob.getByteArray(0, credential.CredentialBlobSize);
-			credential.CredentialBlob.clear(credential.CredentialBlobSize);
+			secret = credentialBlob.getByteArray(0, credential.CredentialBlobSize);
+			credentialBlob.clear(credential.CredentialBlobSize);
 			Native.Advapi32.CredFree(pCredential);
 		}
 		return secret;

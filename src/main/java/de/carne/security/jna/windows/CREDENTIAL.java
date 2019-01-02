@@ -16,13 +16,11 @@
  */
 package de.carne.security.jna.windows;
 
-import java.util.Arrays;
-import java.util.List;
-
 import org.eclipse.jdt.annotation.Nullable;
 
 import com.sun.jna.Pointer;
 import com.sun.jna.Structure;
+import com.sun.jna.Structure.FieldOrder;
 import com.sun.jna.WString;
 
 /**
@@ -30,13 +28,9 @@ import com.sun.jna.WString;
  * Developer Documentation</a>.
  */
 @SuppressWarnings({ "javadoc", "squid:S2160" })
+@FieldOrder({ "Flags", "Type", "TargetName", "Comment", "LastWritten", "CredentialBlobSize", "CredentialBlob",
+		"Persist", "AttributeCount", "Attributes", "TargetAlias", "UserName" })
 public class CREDENTIAL extends Structure {
-
-	@Override
-	protected List<String> getFieldOrder() {
-		return Arrays.asList("Flags", "Type", "TargetName", "Comment", "LastWritten", "CredentialBlobSize",
-				"CredentialBlob", "Persist", "AttributeCount", "Attributes", "TargetAlias", "UserName");
-	}
 
 	public int /* DWORD */ Flags;
 	public int /* DWORD */ Type;
@@ -60,7 +54,7 @@ public class CREDENTIAL extends Structure {
 
 	/**
 	 * Construct a new initialized {@linkplain CREDENTIAL} instance.
-	 * 
+	 *
 	 * @param pointer pointer to use for initialization.
 	 */
 	public CREDENTIAL(Pointer pointer) {

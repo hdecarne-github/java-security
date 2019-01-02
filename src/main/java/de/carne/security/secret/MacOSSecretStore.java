@@ -23,6 +23,8 @@ import java.util.Objects;
 import org.eclipse.jdt.annotation.Nullable;
 
 import com.sun.jna.Pointer;
+import com.sun.jna.ptr.IntByReference;
+import com.sun.jna.ptr.PointerByReference;
 
 import de.carne.boot.logging.Log;
 import de.carne.boot.platform.Platform;
@@ -68,7 +70,7 @@ final class MacOSSecretStore extends SecretStore {
 
 		byte[] serviceNameBytes = id.getBytes(StandardCharsets.UTF_8);
 		byte[] accountNameBytes = ACCOUNT_NAME.getBytes(StandardCharsets.UTF_8);
-		@Nullable Pointer[] itemRef = new @Nullable Pointer[1];
+		PointerByReference itemRef = new PointerByReference();
 		int findStatus = Native.Security.SecKeychainFindGenericPassword(null, serviceNameBytes.length, serviceNameBytes,
 				accountNameBytes.length, accountNameBytes, null, null, itemRef);
 
@@ -76,7 +78,7 @@ final class MacOSSecretStore extends SecretStore {
 			throw statusException(findStatus);
 		}
 		if (findStatus == STATUS_SUCCESS) {
-			Pointer foundItemRef = Objects.requireNonNull(itemRef[0]);
+			Pointer foundItemRef = Objects.requireNonNull(itemRef.getValue());
 			int deleteStatus = Native.Security.SecKeychainItemDelete(foundItemRef);
 
 			Native.CoreFoundation.CFRelease(foundItemRef);
@@ -90,8 +92,8 @@ final class MacOSSecretStore extends SecretStore {
 
 		byte[] serviceNameBytes = id.getBytes(StandardCharsets.UTF_8);
 		byte[] accountNameBytes = ACCOUNT_NAME.getBytes(StandardCharsets.UTF_8);
-		int[] passwordLength = new int[1];
-		@Nullable Pointer[] passwordData = new @Nullable Pointer[1];
+		IntByReference passwordLength = new IntByReference();
+		PointerByReference passwordData = new PointerByReference();
 		int findStatus = Native.Security.SecKeychainFindGenericPassword(null, serviceNameBytes.length, serviceNameBytes,
 				accountNameBytes.length, accountNameBytes, passwordLength, passwordData, null);
 
@@ -102,9 +104,9 @@ final class MacOSSecretStore extends SecretStore {
 		byte[] secret = null;
 
 		if (findStatus == STATUS_SUCCESS) {
-			Pointer foundPasswordData = Objects.requireNonNull(passwordData[0]);
+			Pointer foundPasswordData = Objects.requireNonNull(passwordData.getValue());
 
-			secret = foundPasswordData.getByteArray(0, passwordLength[0]);
+			secret = foundPasswordData.getByteArray(0, passwordLength.getValue());
 			verifyStatusSuccess(Native.Security.SecKeychainItemFreeContent(null, foundPasswordData));
 		}
 		return secret;
@@ -116,7 +118,7 @@ final class MacOSSecretStore extends SecretStore {
 
 		byte[] serviceNameBytes = id.getBytes(StandardCharsets.UTF_8);
 		byte[] accountNameBytes = ACCOUNT_NAME.getBytes(StandardCharsets.UTF_8);
-		@Nullable Pointer[] itemRef = new @Nullable Pointer[1];
+		PointerByReference itemRef = new PointerByReference();
 		int findStatus = Native.Security.SecKeychainFindGenericPassword(null, serviceNameBytes.length, serviceNameBytes,
 				accountNameBytes.length, accountNameBytes, null, null, itemRef);
 
@@ -124,7 +126,7 @@ final class MacOSSecretStore extends SecretStore {
 			throw statusException(findStatus);
 		}
 		if (findStatus == STATUS_SUCCESS) {
-			Pointer foundItemRef = Objects.requireNonNull(itemRef[0]);
+			Pointer foundItemRef = Objects.requireNonNull(itemRef.getPointer());
 			int modifyStatus = Native.Security.SecKeychainItemModifyContent(foundItemRef, null, secret.length, secret);
 
 			Native.CoreFoundation.CFRelease(foundItemRef);
