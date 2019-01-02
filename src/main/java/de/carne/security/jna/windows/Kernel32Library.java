@@ -19,8 +19,17 @@ package de.carne.security.jna.windows;
 import com.sun.jna.win32.StdCallLibrary;
 
 /**
- *
+ * JNA interface to the required functions of the Win32' Kernel32 library.
  */
-public interface CryptLibrary extends StdCallLibrary {
+public interface Kernel32Library extends StdCallLibrary {
+
+	/**
+	 * See <a href="https://msdn.microsoft.com/en-us/d852e148-985c-416f-a5a7-27b6914b45d4">Microsoft Developer
+	 * Documentation</a>
+	 *
+	 * @return see Microsoft Developer Documentation.
+	 */
+	@SuppressWarnings({ "squid:S00100", "squid:S00107" })
+	int/* DWORD */ GetLastError();
 
 }
