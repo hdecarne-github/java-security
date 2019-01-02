@@ -73,9 +73,10 @@ public final class SecureStorage {
 			}
 		}
 
-		Objects.requireNonNull(availableSecretStore);
+		SecretStore activeSecretStore = (matchingSecretStore != null ? matchingSecretStore
+				: Objects.requireNonNull(availableSecretStore));
 
-		return new SecureStorage((matchingSecretStore != null ? matchingSecretStore : availableSecretStore), id);
+		return new SecureStorage(activeSecretStore, id);
 	}
 
 	/**
