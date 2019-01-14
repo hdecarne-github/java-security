@@ -17,6 +17,7 @@
 package de.carne.security.secret;
 
 import java.io.IOException;
+import java.nio.file.Path;
 import java.security.GeneralSecurityException;
 import java.util.Base64;
 import java.util.Objects;
@@ -77,6 +78,22 @@ public final class SecureStorage {
 				: Objects.requireNonNull(availableSecretStore));
 
 		return new SecureStorage(activeSecretStore, id);
+	}
+
+	/**
+	 * Creates a new {@linkplain SecureStorage} instance for a given id using a specific directory for secret storage.
+	 * <p>
+	 * The submitted id is used to uniquely identify the encryption secret to use. Unless {@linkplain #delete()} is
+	 * called for the created instance a subsequent call with the same id will create an instance with the same
+	 * encryption secret.
+	 * </p>
+	 *
+	 * @param id the id of the {@linkplain SecureStorage} instance to create.
+	 * @param secretHome the directory path to use for secret storage.
+	 * @return the created {@linkplain SecureStorage} instance.
+	 */
+	public static SecureStorage create(String id, Path secretHome) {
+		return new SecureStorage(new GenericSecretStore(secretHome), id);
 	}
 
 	/**

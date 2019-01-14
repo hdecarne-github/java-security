@@ -39,6 +39,16 @@ class GenericSecretStore extends SecretStore {
 
 	private static final Log LOG = new Log();
 
+	private final @Nullable Path secretHome;
+
+	GenericSecretStore() {
+		this(null);
+	}
+
+	GenericSecretStore(@Nullable Path secretHome) {
+		this.secretHome = secretHome;
+	}
+
 	@Override
 	public boolean isAvailable() {
 		return true;
@@ -94,7 +104,10 @@ class GenericSecretStore extends SecretStore {
 	}
 
 	private Path getSecretFile(String id) {
-		return FilePreferencesFactory.customRootFile(id + ".secret");
+		String fileName = id + ".secret";
+
+		return (this.secretHome != null ? this.secretHome.resolve(fileName)
+				: FilePreferencesFactory.customRootFile(fileName));
 	}
 
 }

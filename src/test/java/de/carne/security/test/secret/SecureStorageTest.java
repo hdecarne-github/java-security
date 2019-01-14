@@ -45,7 +45,7 @@ class SecureStorageTest {
 
 	@Test
 	void testByteSecureStorage() throws IOException {
-		SecureStorage newStorage = SecureStorage.create(SecureStorageTest.class.getName());
+		SecureStorage newStorage = SecureStorage.create(getClass().getSimpleName());
 		final byte[] token = TEST_PASSWORD.getBytes();
 
 		try (ByteSecret tokenSecret = ByteSecret.wrap(token)) {
@@ -56,7 +56,7 @@ class SecureStorageTest {
 					decryptedToken -> Assertions.assertArrayEquals(token, decryptedToken));
 
 			// Test decryption with a recreated storage instance
-			SecureStorage oldStorage = SecureStorage.create(SecureStorageTest.class.getName());
+			SecureStorage oldStorage = SecureStorage.create(getClass().getSimpleName());
 
 			oldStorage.decryptBytes(encryptedToken,
 					decryptedToken -> Assertions.assertArrayEquals(token, decryptedToken));
@@ -76,7 +76,7 @@ class SecureStorageTest {
 
 	@Test
 	void testCharSecureStorage() throws IOException {
-		SecureStorage newStorage = SecureStorage.create(SecureStorageTest.class.getName());
+		SecureStorage newStorage = SecureStorage.create(getClass().getSimpleName());
 		final char[] password = TEST_PASSWORD.toCharArray();
 
 		try (CharSecret passwordSecret = CharSecret.wrap(password)) {
@@ -87,7 +87,7 @@ class SecureStorageTest {
 					decryptedPassword -> Assertions.assertArrayEquals(password, decryptedPassword));
 
 			// Test decryption with a recreated storage instance
-			SecureStorage oldStorage = SecureStorage.create(SecureStorageTest.class.getName());
+			SecureStorage oldStorage = SecureStorage.create(getClass().getSimpleName());
 
 			oldStorage.decryptChars(encryptedPassword,
 					decryptedPassword -> Assertions.assertArrayEquals(password, decryptedPassword));
@@ -106,8 +106,8 @@ class SecureStorageTest {
 	}
 
 	@Test
-	void testBase64SecureStorage() throws IOException {
-		SecureStorage storage = SecureStorage.create(SecureStorageTest.class.getName());
+	void testCustomBase64SecureStorage(TempPath tempPath) throws IOException {
+		SecureStorage storage = SecureStorage.create(getClass().getSimpleName(), tempPath.get());
 		final byte[] token = TEST_PASSWORD.getBytes();
 
 		try (ByteSecret tokenSecret = ByteSecret.wrap(token)) {
