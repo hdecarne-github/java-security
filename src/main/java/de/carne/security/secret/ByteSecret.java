@@ -18,10 +18,12 @@ package de.carne.security.secret;
 
 import java.util.Arrays;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 /**
  * {@linkplain Secret} implementation for byte based secrets (e.g. security tokens).
  */
-public final class ByteSecret extends Secret<byte[]> {
+public final class ByteSecret extends Secret<byte @NonNull []> {
 
 	private ByteSecret(byte[] token) {
 		super(token);

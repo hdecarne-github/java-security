@@ -41,9 +41,11 @@ jar {
 }
 
 dependencies {
-	api(group: "de.carne.common", name: "java-boot", version: "2.6.0")
-	implementation(group: "net.java.dev.jna", name: "jna", version: "5.2.0")
-	testImplementation(group: "de.carne.common", name: "java-test", version: "1.0.0")
+	compileOnly(group: "org.eclipse.jdt", name: "org.eclipse.jdt.annotation", version: project.annotationVersion)
+	testCompileOnly(group: "org.eclipse.jdt", name: "org.eclipse.jdt.annotation", version: project.annotationVersion)
+	api(group: "de.carne.common", name: "java-boot", version: project.javaBootVersion)
+	implementation(group: "net.java.dev.jna", name: "jna", version: project.jnaVersion)
+	testImplementation(group: "de.carne.common", name: "java-test", version: project.javaTestVersion)
 }
 
 test {

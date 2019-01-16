@@ -21,6 +21,7 @@ import com.sun.jna.win32.W32APIOptions;
 /**
  * The collection of required library functions.
  */
+@SuppressWarnings("squid:S1191")
 public final class Native {
 
 	private Native() {

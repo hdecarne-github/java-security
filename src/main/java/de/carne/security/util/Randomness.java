@@ -19,6 +19,8 @@ package de.carne.security.util;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 import de.carne.boot.Exceptions;
 
 /**
@@ -34,7 +36,7 @@ public final class Randomness {
 	}
 
 	// Shared per thread random source
-	private static final ThreadLocal<SecureRandom> RANDOM = ThreadLocal.withInitial(() -> {
+	private static final ThreadLocal<@NonNull SecureRandom> RANDOM = ThreadLocal.withInitial(() -> {
 		SecureRandom random;
 
 		try {

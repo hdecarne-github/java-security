@@ -19,6 +19,7 @@ package de.carne.security.jna.macos;
 /**
  * The collection of required framework &amp; library functions.
  */
+@SuppressWarnings("squid:S1191")
 public final class Native {
 
 	private Native() {

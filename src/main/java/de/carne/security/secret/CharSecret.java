@@ -18,10 +18,12 @@ package de.carne.security.secret;
 
 import java.util.Arrays;
 
+import org.eclipse.jdt.annotation.NonNull;
+
 /**
  * {@linkplain Secret} implementation for character based secrets (e.g. passwords).
  */
-public final class CharSecret extends Secret<char[]> {
+public final class CharSecret extends Secret<char @NonNull []> {
 
 	private CharSecret(char[] password) {
 		super(password);
