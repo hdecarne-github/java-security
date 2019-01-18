@@ -19,6 +19,8 @@ package de.carne.security.util;
 import javax.security.auth.DestroyFailedException;
 import javax.security.auth.Destroyable;
 
+import org.eclipse.jdt.annotation.Nullable;
+
 import de.carne.boot.logging.Log;
 import de.carne.security.SecurityError;
 
@@ -39,8 +41,8 @@ public final class Destroyables {
 	 *
 	 * @param destroyable the {@linkplain Destroyable} instance to destroy.
 	 */
-	public static void safeDestroy(Destroyable destroyable) {
-		if (!destroyable.isDestroyed()) {
+	public static void safeDestroy(@Nullable Destroyable destroyable) {
+		if (destroyable != null && !destroyable.isDestroyed()) {
 			try {
 				destroyable.destroy();
 			} catch (DestroyFailedException e) {

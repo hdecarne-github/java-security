@@ -123,7 +123,7 @@ class AESCipher extends Cipher {
 		javax.crypto.Cipher cipher = javax.crypto.Cipher.getInstance(CIPHER_ALG);
 
 		cipher.init(javax.crypto.Cipher.DECRYPT_MODE, this.secretKeySpec, gcmParameterSpec);
-		return cipher.doFinal(encrypted, IV_LENGTH, encrypted.length - IV_LENGTH);
+		return Objects.requireNonNull(cipher.doFinal(encrypted, IV_LENGTH, encrypted.length - IV_LENGTH));
 	}
 
 	@Override
