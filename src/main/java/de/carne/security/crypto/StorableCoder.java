@@ -75,7 +75,7 @@ public abstract class StorableCoder extends Coder {
 	 * Called by the specific {@linkplain StorableCoder} instance to advance to it's specific secret data.
 	 * </p>
 	 *
-	 * @param id the {@linkplain StorableCodeId} of the {@linkplain StorableCoder} instance to load.
+	 * @param id the {@linkplain StorableCoderId} of the {@linkplain StorableCoder} instance to load.
 	 * @param secret the secret data to load the coder {@linkplain StorableCoder} instance from.
 	 * @param secretOff the offset to start reading.
 	 * @param secretLen the maximum number of bytes to read.

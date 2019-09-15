@@ -36,7 +36,9 @@ public final class SafeByteArrayOutputStream extends OutputStream {
 	private int pos = 0;
 
 	/**
-	 * @param size
+	 * Constructs a new {@linkplain SafeByteArrayOutputStream} instance.
+	 *
+	 * @param size the initial buffer size for backing up the instance.
 	 */
 	public SafeByteArrayOutputStream(int size) {
 		Check.isTrue(size >= 0, "Invalid buffer size: {0}", size);

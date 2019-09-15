@@ -21,7 +21,6 @@ import java.nio.file.Path;
 import java.security.GeneralSecurityException;
 import java.util.Base64;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 import org.eclipse.jdt.annotation.NonNull;
 
@@ -105,7 +104,7 @@ public final class SecureStorage {
 	 * @param secret the byte secret to encrypt.
 	 * @return the encrypted byte secret.
 	 * @throws IOException if an I/O error occurs during encryption.
-	 * @see #decryptBytes(byte[], Consumer)
+	 * @see #decryptBytes(byte[], SecretConsumer)
 	 */
 	public byte[] encryptBytes(ByteSecret secret) throws IOException {
 		byte[] encrypted;
@@ -124,7 +123,7 @@ public final class SecureStorage {
 	 * @param secret the byte secret to encrypt.
 	 * @return the base64 encoded encrypted byte secret.
 	 * @throws IOException if an I/O error occurs during encryption.
-	 * @see #decryptBytesBase64(String, Consumer)
+	 * @see #decryptBytesBase64(String, SecretConsumer)
 	 */
 	public String encryptBytesBase64(ByteSecret secret) throws IOException {
 		return Base64.getEncoder().encodeToString(encryptBytes(secret));
@@ -134,7 +133,7 @@ public final class SecureStorage {
 	 * Decrypt a previously encrypted byte secret.
 	 *
 	 * @param encrypted the encrypted byte secret.
-	 * @param consumer the {@linkplain Consumer} to invoke with the decrypted byte secret.
+	 * @param consumer the {@linkplain SecretConsumer} to invoke with the decrypted byte secret.
 	 * @throws IOException if an I/O error occurs during decryption.
 	 * @see #encryptBytes(ByteSecret)
 	 */
@@ -151,7 +150,7 @@ public final class SecureStorage {
 	 * Decrypt a previously encrypted and base64 encoded byte secret.
 	 *
 	 * @param encrypted the encrypted and base64 encoded byte secret.
-	 * @param consumer the {@linkplain Consumer} to invoke with the decrypted byte secret.
+	 * @param consumer the {@linkplain SecretConsumer} to invoke with the decrypted byte secret.
 	 * @throws IOException if an I/O error occurs during decryption.
 	 * @see #encryptBytesBase64(ByteSecret)
 	 */
@@ -165,7 +164,7 @@ public final class SecureStorage {
 	 * @param secret the char secret to encrypt.
 	 * @return the encrypted char secret.
 	 * @throws IOException if an I/O error occurs during encryption.
-	 * @see #decryptChars(byte[], Consumer)
+	 * @see #decryptChars(byte[], SecretConsumer)
 	 */
 	public byte[] encryptChars(CharSecret secret) throws IOException {
 		byte[] encrypted;
@@ -194,7 +193,7 @@ public final class SecureStorage {
 	 * @param secret the char secret to encrypt.
 	 * @return the encrypted and base64 encoded char secret.
 	 * @throws IOException if an I/O error occurs during encryption.
-	 * @see #decryptCharsBase64(String, Consumer)
+	 * @see #decryptCharsBase64(String, SecretConsumer)
 	 */
 	public String encryptCharsBase64(CharSecret secret) throws IOException {
 		return Base64.getEncoder().encodeToString(encryptChars(secret));
@@ -204,7 +203,7 @@ public final class SecureStorage {
 	 * Decrypt a previously encrypted char secret.
 	 *
 	 * @param encrypted the encrypted char secret.
-	 * @param consumer the {@linkplain Consumer} to invoke with the decrypted char secret.
+	 * @param consumer the {@linkplain SecretConsumer} to invoke with the decrypted char secret.
 	 * @throws IOException if an I/O error occurs during decryption.
 	 * @see #encryptChars(CharSecret)
 	 */
@@ -230,7 +229,7 @@ public final class SecureStorage {
 	 * Decrypt a previously encrypted and base64 encoded char secret.
 	 *
 	 * @param encrypted the encrypted and base64 encoded char secret.
-	 * @param consumer the {@linkplain Consumer} to invoke with the decrypted char secret.
+	 * @param consumer the {@linkplain SecretConsumer} to invoke with the decrypted char secret.
 	 * @throws IOException if an I/O error occurs during decryption.
 	 * @see #encryptCharsBase64(CharSecret)
 	 */
