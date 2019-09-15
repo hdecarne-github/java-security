@@ -19,11 +19,11 @@ package de.carne.security.secret;
 import java.security.GeneralSecurityException;
 
 /**
- * Functional interface used to process a {@linkplain Secret} instance's data.
+ * Functional interface used to consume a {@linkplain Secret} instance's data.
  */
 @FunctionalInterface
-public interface SecretFunction<T, R> {
+public interface SecretConsumer<T> {
 
-	R apply(T t) throws GeneralSecurityException;
+	void accept(T t) throws GeneralSecurityException;
 
 }

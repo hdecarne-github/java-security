@@ -14,16 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.carne.security.secret;
+@NonNullByDefault()
+package de.carne.security.crypto;
 
-import java.security.GeneralSecurityException;
-
-/**
- * Functional interface used to process a {@linkplain Secret} instance's data.
- */
-@FunctionalInterface
-public interface SecretFunction<T, R> {
-
-	R apply(T t) throws GeneralSecurityException;
-
-}
+import org.eclipse.jdt.annotation.NonNullByDefault;

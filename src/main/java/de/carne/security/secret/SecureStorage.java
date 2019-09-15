@@ -69,6 +69,7 @@ public final class SecureStorage {
 
 		for (SecretStore secretStore : SECRET_STORES) {
 			if (secretStore.isAvailable()) {
+				// Last available one is the most preferred one
 				availableSecretStore = secretStore;
 				if (secretStore.hasSecret(id)) {
 					matchingSecretStore = secretStore;
@@ -137,7 +138,7 @@ public final class SecureStorage {
 	 * @throws IOException if an I/O error occurs during decryption.
 	 * @see #encryptBytes(ByteSecret)
 	 */
-	public void decryptBytes(byte[] encrypted, Consumer<byte @NonNull []> consumer) throws IOException {
+	public void decryptBytes(byte[] encrypted, SecretConsumer<byte @NonNull []> consumer) throws IOException {
 		try (Cipher cipher = this.secretStore.getCipher(this.id);
 				ByteSecret decrypted = ByteSecret.wrap(cipher.decrypt(encrypted))) {
 			decrypted.accept(consumer);
@@ -154,7 +155,7 @@ public final class SecureStorage {
 	 * @throws IOException if an I/O error occurs during decryption.
 	 * @see #encryptBytesBase64(ByteSecret)
 	 */
-	public void decryptBytesBase64(String encrypted, Consumer<byte @NonNull []> consumer) throws IOException {
+	public void decryptBytesBase64(String encrypted, SecretConsumer<byte @NonNull []> consumer) throws IOException {
 		decryptBytes(Base64.getDecoder().decode(encrypted), consumer);
 	}
 
@@ -207,7 +208,7 @@ public final class SecureStorage {
 	 * @throws IOException if an I/O error occurs during decryption.
 	 * @see #encryptChars(CharSecret)
 	 */
-	public void decryptChars(byte[] encrypted, Consumer<char @NonNull []> consumer) throws IOException {
+	public void decryptChars(byte[] encrypted, SecretConsumer<char @NonNull []> consumer) throws IOException {
 		decryptBytes(encrypted, plainBytes -> {
 			try (CharSecret charSecret = decodeChars(plainBytes)) {
 				charSecret.accept(consumer);
@@ -233,7 +234,7 @@ public final class SecureStorage {
 	 * @throws IOException if an I/O error occurs during decryption.
 	 * @see #encryptCharsBase64(CharSecret)
 	 */
-	public void decryptCharsBase64(String encrypted, Consumer<char @NonNull []> consumer) throws IOException {
+	public void decryptCharsBase64(String encrypted, SecretConsumer<char @NonNull []> consumer) throws IOException {
 		decryptChars(Base64.getDecoder().decode(encrypted), consumer);
 	}
 

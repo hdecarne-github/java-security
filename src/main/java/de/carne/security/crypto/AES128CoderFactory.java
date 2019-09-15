@@ -14,16 +14,23 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.carne.security.secret;
+package de.carne.security.crypto;
 
 import java.security.GeneralSecurityException;
 
 /**
- * Functional interface used to process a {@linkplain Secret} instance's data.
+ * {@linkplain StorableCoderId#AES128} factory.
  */
-@FunctionalInterface
-public interface SecretFunction<T, R> {
+class AES128CoderFactory implements StorableCoderFactory {
 
-	R apply(T t) throws GeneralSecurityException;
+	@Override
+	public StorableCoder newCoder() throws GeneralSecurityException {
+		return AESCoder.newCoder(StorableCoderId.AES128);
+	}
+
+	@Override
+	public StorableCoder loadCoder(byte[] secret, int off, int len) throws GeneralSecurityException {
+		return AESCoder.loadCoder(StorableCoderId.AES128, secret, off, len);
+	}
 
 }

@@ -17,7 +17,6 @@
 package de.carne.security.secret;
 
 import java.security.GeneralSecurityException;
-import java.util.function.Consumer;
 
 /**
  * Descendants of this class are used to wrap sensitive data and make sure it is properly overwritten in memory when it
@@ -29,15 +28,15 @@ public abstract class Secret<T> implements AutoCloseable {
 
 	private final T data;
 
-	Secret(T data) {
+	protected Secret(T data) {
 		this.data = data;
 	}
 
-	void accept(Consumer<T> consumer) {
+	public void accept(SecretConsumer<T> consumer) throws GeneralSecurityException {
 		consumer.accept(this.data);
 	}
 
-	<E> E apply(SecretFunction<T, E> function) throws GeneralSecurityException {
+	public <E> E apply(SecretFunction<T, E> function) throws GeneralSecurityException {
 		return function.apply(this.data);
 	}
 
