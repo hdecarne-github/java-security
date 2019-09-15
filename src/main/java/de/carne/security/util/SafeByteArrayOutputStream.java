@@ -21,18 +21,34 @@ import java.util.Arrays;
 
 import org.eclipse.jdt.annotation.Nullable;
 
+import de.carne.boot.check.Check;
+
 /**
- *
+ * {@linkplain OutputStream} implementation backed up by a dynamic byte array.
+ * <p>
+ * In contrast to the standard {@linkplain java.io.ByteArrayOutputStream} implementation this implementation clears the
+ * bytes buffer as soon it is no longer used to minimize the a availability of sensitive data in memory to a minimum.
+ * </p>
  */
 public final class SafeByteArrayOutputStream extends OutputStream {
 
 	private byte[] buf;
 	private int pos = 0;
 
+	/**
+	 * @param size
+	 */
 	public SafeByteArrayOutputStream(int size) {
+		Check.isTrue(size >= 0, "Invalid buffer size: {0}", size);
+
 		this.buf = new byte[size];
 	}
 
+	/**
+	 * Gets the bytes written until now and empties the buffer.
+	 *
+	 * @return the bytes written until now.
+	 */
 	public byte[] getBytes() {
 		if (this.pos < this.buf.length) {
 			setBufferSize(this.pos);

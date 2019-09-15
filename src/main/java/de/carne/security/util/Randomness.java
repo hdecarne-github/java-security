@@ -36,6 +36,7 @@ public final class Randomness {
 	}
 
 	// Shared per thread random source
+	@SuppressWarnings("squid:S5164")
 	private static final ThreadLocal<@NonNull SecureRandom> RANDOM = ThreadLocal.withInitial(() -> {
 		SecureRandom random;
 

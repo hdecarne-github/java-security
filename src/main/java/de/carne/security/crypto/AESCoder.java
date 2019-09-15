@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.security.GeneralSecurityException;
+import java.security.NoSuchAlgorithmException;
 import java.security.spec.KeySpec;
 import java.util.Arrays;
 import java.util.Objects;
@@ -51,6 +52,7 @@ final class AESCoder extends StorableCoder {
 	private static final int SALT_LENGTH = 8;
 	private static final int IV_LENGTH = 12;
 	private static final int GCM_TLEN = 128;
+	private static final int SECRET_BUFFER_SIZE = 44;
 
 	public static final String KEY_ALG = "AES";
 
@@ -61,6 +63,21 @@ final class AESCoder extends StorableCoder {
 		super(id);
 		this.secretKeySpec = secretKeySpec;
 		this.salt = salt;
+	}
+
+	static StorableCoderId getDefaultCoder() {
+		StorableCoderId defaultCoder = StorableCoderId.AES256;
+
+		try {
+			if (Cipher.getMaxAllowedKeyLength(KEY_ALG) < 256) {
+				LOG.warning("Reverting to AES128 coder due to active JCE jurisdiction policy");
+
+				defaultCoder = StorableCoderId.AES128;
+			}
+		} catch (NoSuchAlgorithmException e) {
+			LOG.warning(e, "Unable to determine maximum AES key length");
+		}
+		return defaultCoder;
 	}
 
 	static AESCoder newCoder(StorableCoderId id) throws GeneralSecurityException {
@@ -121,7 +138,8 @@ final class AESCoder extends StorableCoder {
 	@Override
 	public ByteSecret store() throws GeneralSecurityException {
 		ByteSecret secret;
-		try (SafeByteArrayOutputStream secretBuffer = new SafeByteArrayOutputStream(0)) {
+
+		try (SafeByteArrayOutputStream secretBuffer = new SafeByteArrayOutputStream(SECRET_BUFFER_SIZE)) {
 			storeSecretHeader(secretBuffer);
 			secretBuffer.write(this.salt);
 			secretBuffer.write(this.secretKeySpec.getEncoded());

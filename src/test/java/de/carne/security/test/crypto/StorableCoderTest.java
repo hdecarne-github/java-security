@@ -54,6 +54,18 @@ class StorableCoderTest {
 		}
 	}
 
+	@Test
+	void testDefaultCoder() throws GeneralSecurityException {
+		try (StorableCoder coder = StorableCoder.defaultCoder().newCoder();
+				ByteSecret coderSecret = coder.store();
+				StorableCoder reloadedCoder = StorableCoder.load(coderSecret);) {
+			LOG.info("Testing default coder: {0}...", coder);
+
+			testCoder(coder);
+			testCoder(reloadedCoder);
+		}
+	}
+
 	private void testCoder(StorableCoder coder) throws GeneralSecurityException {
 		byte[] encoded = coder.encrypt(TEST_DATA);
 		byte[] decoded = coder.decrypt(encoded);

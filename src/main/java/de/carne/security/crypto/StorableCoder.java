@@ -35,6 +35,15 @@ public abstract class StorableCoder extends Coder {
 	}
 
 	/**
+	 * Gets the default {@linkplain StorableCoderId} for the running platform.
+	 *
+	 * @return the default {@linkplain StorableCoderId} for the running platform.
+	 */
+	public static StorableCoderId defaultCoder() {
+		return AESCoder.getDefaultCoder();
+	}
+
+	/**
 	 * Load {@linkplain StorableCoder} instance from a stored secret.
 	 *
 	 * @param secret the secret to load the {@linkplain StorableCoder} instance from.

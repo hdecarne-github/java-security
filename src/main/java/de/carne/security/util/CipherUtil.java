@@ -35,6 +35,20 @@ public final class CipherUtil {
 		// prevent instantiation
 	}
 
+	/**
+	 * Streams the data provided via an {@linkplain InputStream} through the given {@linkplain Cipher} instance.
+	 * <p>
+	 * The resulting operation depends on how the given {@linkplain Cipher} instance has been initialized.
+	 * </p>
+	 *
+	 * @param cipher the {@linkplain Cipher} instance to use for streaming.
+	 * @param in the input to stream from.
+	 * @param out the output to stream to.
+	 * @return the number of bytes read from input. Depending on the used cipher this will not match the number of
+	 * written bytes.
+	 * @throws IOException if an I/O error occurs.
+	 * @throws GeneralSecurityException if a security related error occurs.
+	 */
 	public static int stream(Cipher cipher, InputStream in, OutputStream out)
 			throws IOException, GeneralSecurityException {
 		int read = 0;
